@@ -3,27 +3,47 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63AFEB53712590FD899B478F /* Pods_LetsGoToTheMall.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30579B97698118B30E41AFAC /* Pods_LetsGoToTheMall.framework */; };
 		CD2A24F6257AAA7100A1D5C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD2A24F5257AAA7100A1D5C5 /* AppDelegate.swift */; };
 		CD2A24F8257AAA7100A1D5C5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD2A24F7257AAA7100A1D5C5 /* SceneDelegate.swift */; };
-		CD2A24FA257AAA7100A1D5C5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD2A24F9257AAA7100A1D5C5 /* ViewController.swift */; };
+		CD2A24FA257AAA7100A1D5C5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD2A24F9257AAA7100A1D5C5 /* LoginViewController.swift */; };
 		CD2A24FD257AAA7100A1D5C5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD2A24FB257AAA7100A1D5C5 /* Main.storyboard */; };
 		CD2A24FF257AAA7300A1D5C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD2A24FE257AAA7300A1D5C5 /* Assets.xcassets */; };
 		CD2A2502257AAA7300A1D5C5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD2A2500257AAA7300A1D5C5 /* LaunchScreen.storyboard */; };
+		CD3634DA257ACC9B0038C267 /* StoreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3634D9257ACC9B0038C267 /* StoreDetailViewController.swift */; };
+		CD3634DE257AE3B90038C267 /* Mall.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3634DD257AE3B90038C267 /* Mall.swift */; };
+		CD3634E1257AE3FB0038C267 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3634E0257AE3FB0038C267 /* Store.swift */; };
+		CD6251AD257AEC790035696D /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6251AC257AEC790035696D /* Review.swift */; };
+		CD9FFFA2257AACA7000F80DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CD9FFFA1257AACA7000F80DC /* GoogleService-Info.plist */; };
+		CD9FFFA7257AB4CC000F80DC /* MallListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9FFFA6257AB4CC000F80DC /* MallListViewController.swift */; };
+		CD9FFFAA257AB5F1000F80DC /* MallTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9FFFA9257AB5F1000F80DC /* MallTableViewCell.swift */; };
+		CD9FFFAD257ABD35000F80DC /* MallDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9FFFAC257ABD35000F80DC /* MallDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A452B51E1A55DBDAF4F3478 /* Pods-LetsGoToTheMall.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LetsGoToTheMall.release.xcconfig"; path = "Target Support Files/Pods-LetsGoToTheMall/Pods-LetsGoToTheMall.release.xcconfig"; sourceTree = "<group>"; };
+		30579B97698118B30E41AFAC /* Pods_LetsGoToTheMall.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LetsGoToTheMall.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA8FB0B3B1B77151B754B84E /* Pods-LetsGoToTheMall.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LetsGoToTheMall.debug.xcconfig"; path = "Target Support Files/Pods-LetsGoToTheMall/Pods-LetsGoToTheMall.debug.xcconfig"; sourceTree = "<group>"; };
 		CD2A24F2257AAA7100A1D5C5 /* LetsGoToTheMall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LetsGoToTheMall.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD2A24F5257AAA7100A1D5C5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD2A24F7257AAA7100A1D5C5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CD2A24F9257AAA7100A1D5C5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CD2A24F9257AAA7100A1D5C5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CD2A24FC257AAA7100A1D5C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CD2A24FE257AAA7300A1D5C5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CD2A2501257AAA7300A1D5C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CD2A2503257AAA7300A1D5C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CD3634D9257ACC9B0038C267 /* StoreDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailViewController.swift; sourceTree = "<group>"; };
+		CD3634DD257AE3B90038C267 /* Mall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mall.swift; sourceTree = "<group>"; };
+		CD3634E0257AE3FB0038C267 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		CD6251AC257AEC790035696D /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		CD9FFFA1257AACA7000F80DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		CD9FFFA6257AB4CC000F80DC /* MallListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MallListViewController.swift; sourceTree = "<group>"; };
+		CD9FFFA9257AB5F1000F80DC /* MallTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MallTableViewCell.swift; sourceTree = "<group>"; };
+		CD9FFFAC257ABD35000F80DC /* MallDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MallDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +51,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63AFEB53712590FD899B478F /* Pods_LetsGoToTheMall.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D076209402E3B7DEEFADD6B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AA8FB0B3B1B77151B754B84E /* Pods-LetsGoToTheMall.debug.xcconfig */,
+				2A452B51E1A55DBDAF4F3478 /* Pods-LetsGoToTheMall.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		6E553862C65D0750AFC52C5B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				30579B97698118B30E41AFAC /* Pods_LetsGoToTheMall.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CD2A24E9257AAA7100A1D5C5 = {
 			isa = PBXGroup;
 			children = (
 				CD2A24F4257AAA7100A1D5C5 /* LetsGoToTheMall */,
 				CD2A24F3257AAA7100A1D5C5 /* Products */,
+				4D076209402E3B7DEEFADD6B /* Pods */,
+				6E553862C65D0750AFC52C5B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,11 +98,19 @@
 			children = (
 				CD2A24F5257AAA7100A1D5C5 /* AppDelegate.swift */,
 				CD2A24F7257AAA7100A1D5C5 /* SceneDelegate.swift */,
-				CD2A24F9257AAA7100A1D5C5 /* ViewController.swift */,
+				CD3634DD257AE3B90038C267 /* Mall.swift */,
+				CD3634E0257AE3FB0038C267 /* Store.swift */,
+				CD6251AC257AEC790035696D /* Review.swift */,
+				CD2A24F9257AAA7100A1D5C5 /* LoginViewController.swift */,
+				CD9FFFA6257AB4CC000F80DC /* MallListViewController.swift */,
+				CD9FFFA9257AB5F1000F80DC /* MallTableViewCell.swift */,
+				CD9FFFAC257ABD35000F80DC /* MallDetailViewController.swift */,
+				CD3634D9257ACC9B0038C267 /* StoreDetailViewController.swift */,
 				CD2A24FB257AAA7100A1D5C5 /* Main.storyboard */,
 				CD2A24FE257AAA7300A1D5C5 /* Assets.xcassets */,
 				CD2A2500257AAA7300A1D5C5 /* LaunchScreen.storyboard */,
 				CD2A2503257AAA7300A1D5C5 /* Info.plist */,
+				CD9FFFA1257AACA7000F80DC /* GoogleService-Info.plist */,
 			);
 			path = LetsGoToTheMall;
 			sourceTree = "<group>";
@@ -74,9 +122,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD2A2506257AAA7300A1D5C5 /* Build configuration list for PBXNativeTarget "LetsGoToTheMall" */;
 			buildPhases = (
+				F9AF21F8B891155340640E25 /* [CP] Check Pods Manifest.lock */,
 				CD2A24EE257AAA7100A1D5C5 /* Sources */,
 				CD2A24EF257AAA7100A1D5C5 /* Frameworks */,
 				CD2A24F0257AAA7100A1D5C5 /* Resources */,
+				4899A70B80014228BAAB5785 /* [CP] Embed Pods Frameworks */,
+				A6B59EA0D636D370CD58F286 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -125,6 +176,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD2A2502257AAA7300A1D5C5 /* LaunchScreen.storyboard in Resources */,
+				CD9FFFA2257AACA7000F80DC /* GoogleService-Info.plist in Resources */,
 				CD2A24FF257AAA7300A1D5C5 /* Assets.xcassets in Resources */,
 				CD2A24FD257AAA7100A1D5C5 /* Main.storyboard in Resources */,
 			);
@@ -132,14 +184,80 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4899A70B80014228BAAB5785 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LetsGoToTheMall/Pods-LetsGoToTheMall-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LetsGoToTheMall/Pods-LetsGoToTheMall-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LetsGoToTheMall/Pods-LetsGoToTheMall-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A6B59EA0D636D370CD58F286 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LetsGoToTheMall/Pods-LetsGoToTheMall-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LetsGoToTheMall/Pods-LetsGoToTheMall-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LetsGoToTheMall/Pods-LetsGoToTheMall-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F9AF21F8B891155340640E25 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LetsGoToTheMall-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		CD2A24EE257AAA7100A1D5C5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD2A24FA257AAA7100A1D5C5 /* ViewController.swift in Sources */,
+				CD9FFFA7257AB4CC000F80DC /* MallListViewController.swift in Sources */,
+				CD2A24FA257AAA7100A1D5C5 /* LoginViewController.swift in Sources */,
 				CD2A24F6257AAA7100A1D5C5 /* AppDelegate.swift in Sources */,
+				CD3634E1257AE3FB0038C267 /* Store.swift in Sources */,
+				CD3634DE257AE3B90038C267 /* Mall.swift in Sources */,
+				CD6251AD257AEC790035696D /* Review.swift in Sources */,
+				CD9FFFAD257ABD35000F80DC /* MallDetailViewController.swift in Sources */,
 				CD2A24F8257AAA7100A1D5C5 /* SceneDelegate.swift in Sources */,
+				CD3634DA257ACC9B0038C267 /* StoreDetailViewController.swift in Sources */,
+				CD9FFFAA257AB5F1000F80DC /* MallTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +401,7 @@
 		};
 		CD2A2507257AAA7300A1D5C5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA8FB0B3B1B77151B754B84E /* Pods-LetsGoToTheMall.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -302,6 +421,7 @@
 		};
 		CD2A2508257AAA7300A1D5C5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A452B51E1A55DBDAF4F3478 /* Pods-LetsGoToTheMall.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
