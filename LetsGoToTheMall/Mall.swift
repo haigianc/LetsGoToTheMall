@@ -29,6 +29,13 @@ class Mall {
         self.init(name: "", address: "", userID: "", documentID: "")
     }
     
+    convenience init(dictionary: [String: Any]) {
+        let name = dictionary["name"] as! String? ?? ""
+        let address = dictionary["address"] as! String? ?? ""
+        let userID = dictionary["userID"] as! String? ?? ""
+        self.init(name: name, address: address, userID: userID, documentID: "")
+    }
+    
     func saveData(completion: @escaping (Bool) -> ()) {
         let db = Firestore.firestore()
         //Grab the user ID

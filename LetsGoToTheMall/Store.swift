@@ -29,6 +29,15 @@ class Store {
         self.documentID = documentID
     }
     
+    convenience init(dictionary: [String: Any]) {
+        let name = dictionary["name"] as! String? ?? ""
+        let website = dictionary["website"] as! String? ?? ""
+        let averageRating = dictionary["averageRating"] as! Double? ?? 0.0
+        let numberOfReviews = dictionary["numberOfReviews"] as! Int? ?? 0
+        let postingUserID = dictionary["postingUserID"] as! String? ?? ""
+        self.init(name: name, website: website, averageRating: averageRating, numberOfReviews: numberOfReviews, postingUserID: postingUserID, documentID: "")
+    }
+    
     func saveData(mall: Mall, completion: @escaping (Bool) -> ()){
         let db = Firestore.firestore()
         

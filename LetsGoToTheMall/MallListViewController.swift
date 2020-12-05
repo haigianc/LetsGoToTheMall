@@ -11,13 +11,21 @@ class MallListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var sortSegmentedControl: UISegmentedControl!
     
-    var malls = ["Roosevelt Field", "Americana", "The Shops at Chestnut Hill", "Chestnut Hill Square"]
+    var malls: Malls!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        malls = Malls()
         tableView.delegate = self
         tableView.dataSource = self
         configureSegmentedControl()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        malls.loadData {
+            self.tableView.reloadData()
+        }
     }
     
     func configureSegmentedControl() {
@@ -30,6 +38,14 @@ class MallListViewController: UIViewController {
         //add white border to segmented control
         sortSegmentedControl.layer.borderColor = UIColor(named: "SecondaryColor")?.cgColor //creates UIColor as app's secondary color
         sortSegmentedControl.layer.borderWidth = 1.0
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowMallDetail" {
+            let destination = segue.destination as! MallDetailViewController
+            let selectedIndexPath = tableView.indexPathForSelectedRow!
+            destination.mall = malls.mallArray[selectedIndexPath.row]
+        }
     }
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -46,12 +62,12 @@ class MallListViewController: UIViewController {
 
 extension MallListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return malls.count
+        return malls.mallArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MallTableViewCell
-        cell.nameLabel?.text = malls[indexPath.row]
+        cell.nameLabel?.text = malls.mallArray[indexPath.row].name
         return cell
     }
     

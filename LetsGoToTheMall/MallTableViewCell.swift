@@ -11,5 +11,10 @@ class MallTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
     
-
+    var mall: Mall!{
+        didSet{
+            nameLabel.text = mall.name
+            
+        }
+    }
 }
