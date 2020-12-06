@@ -10,6 +10,7 @@ import UIKit
 class MallListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var sortSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var mallListSegmentedControll: UISegmentedControl!
     
     var malls: Malls!
     
@@ -33,11 +34,15 @@ class MallListViewController: UIViewController {
         let pinkFontColor = [NSAttributedString.Key.foregroundColor : UIColor(named: "PrimaryColor") ?? UIColor.systemPink]
         let lightFontColor = [NSAttributedString.Key.foregroundColor : UIColor(named: "SecondaryColor") ?? UIColor.white]
         sortSegmentedControl.setTitleTextAttributes(pinkFontColor, for: .selected)
+        mallListSegmentedControll.setTitleTextAttributes(pinkFontColor, for: .selected)
         sortSegmentedControl.setTitleTextAttributes(lightFontColor, for: .normal)
+        mallListSegmentedControll.setTitleTextAttributes(lightFontColor, for: .normal)
         
         //add white border to segmented control
         sortSegmentedControl.layer.borderColor = UIColor(named: "SecondaryColor")?.cgColor //creates UIColor as app's secondary color
+        mallListSegmentedControll.layer.borderColor = UIColor(named: "SecondaryColor")?.cgColor
         sortSegmentedControl.layer.borderWidth = 1.0
+        mallListSegmentedControll.layer.borderWidth = 1.0
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

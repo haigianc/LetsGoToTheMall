@@ -7,33 +7,142 @@
 
 import Foundation
 import Firebase
+import MapKit
+import GoogleMaps
+import GooglePlaces
 
-class Mall {
+class Mall: NSObject, MKAnnotation {
     var name: String
     var address: String
+    var coordinate: CLLocationCoordinate2D
+    //var viewport: GMSCoordinateBounds
+    var hours: GMSOpeningHours
     var userID: String
     var documentID: String
     
     var dictionary: [String: Any] {
-        return ["name": name, "address": address, "userID": userID]
+        //return ["name": name, "address": address, "viewport": viewport, "userID": userID]
+        return ["name": name, "address": address, "latitude": latitude, "longitude": longitutde, "userID": userID]
     }
     
-    init(name: String, address: String, userID: String, documentID: String) {
+    var latitude: CLLocationDegrees {
+        return coordinate.latitude
+    }
+    
+    var longitutde: CLLocationDegrees{
+        return coordinate.longitude
+    }
+    
+    var closeMinute: Int {
+        return Int(closeTime.minute)
+    }
+    
+    var closeHour: Int {
+        return Int(closeTime.hour)
+    }
+    
+    var openMinute: Int{
+        return Int(openTime.minute)
+    }
+    
+    var openHour: Int{
+        return Int(openTime.hour)
+    }
+    
+    var closeTime: GMSTime{
+        return closeEvent.time
+    }
+    
+    var openTime: GMSTime{
+        return openEvent.time
+    }
+    
+    var closeEvent: GMSEvent{
+        return period[0].closeEvent ?? GMSEvent()
+    }
+    
+    var openEvent: GMSEvent{
+        return period[0].openEvent
+    }
+    
+    var period: [GMSPeriod] {
+        return hours.periods ?? [GMSPeriod()]
+    }
+    
+//    var neLatitude: CLLocationDegrees {
+//        return northEast.latitude
+//    }
+//
+//    var neLongitutde: CLLocationDegrees{
+//        return northEast.longitude
+//    }
+//
+//    var swLatitude: CLLocationDegrees {
+//        return southWest.latitude
+//    }
+//
+//    var swLongitutde: CLLocationDegrees{
+//        return southWest.longitude
+//    }
+//
+//    var northEast: CLLocationCoordinate2D{
+//        return viewport.northEast
+//    }
+//
+//    var southWest: CLLocationCoordinate2D{
+//        return viewport.southWest
+//    }
+    
+    var location: CLLocation{
+        return CLLocation(latitude: latitude, longitude: longitutde)
+    }
+    
+    var title: String? {
+        return name
+    }
+    
+    init(name: String, address: String, coordinate: CLLocationCoordinate2D, hours: GMSOpeningHours, userID: String, documentID: String) {
+        //add viewport: GMSCoordinateBounds, as a parameter
         self.name = name
         self.address = address
+        self.coordinate = coordinate
+        //self.viewport = viewport
+        self.hours = hours
         self.userID = userID
         self.documentID = documentID
     }
     
-    convenience init() {
-        self.init(name: "", address: "", userID: "", documentID: "")
+    convenience override init() {
+        //add viewport: GMSCoordinateBounds(), to function call
+        self.init(name: "", address: "", coordinate: CLLocationCoordinate2D(), hours: GMSOpeningHours(), userID: "", documentID: "")
     }
     
     convenience init(dictionary: [String: Any]) {
         let name = dictionary["name"] as! String? ?? ""
         let address = dictionary["address"] as! String? ?? ""
+        let latitude = dictionary["latitude"] as! Double? ?? 0.0
+        let longitude = dictionary["longitude"] as! Double? ?? 0.0
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+//        let neLatitude = dictionary["neLatitude"] as! Double? ?? 0.0
+//        let neLongitude = dictionary["neLongitude"] as! Double? ?? 0.0
+//        let swLatitude = dictionary["neLatitude"] as! Double? ?? 0.0
+//        let swLongitude = dictionary["neLongitude"] as! Double? ?? 0.0
+//        let northEast = CLLocationCoordinate2D(latitude: neLatitude, longitude: neLongitude)
+//        let southWest = CLLocationCoordinate2D(latitude: swLatitude, longitude: swLongitude)
+//        let viewport = GMSCoordinateBounds(coordinate: northEast, coordinate: southWest)
+        let closeMinute = dictionary["closeMinute"] as! Int? ?? 0
+        let closeHour = dictionary["closeHour"] as! Int? ?? 0
+        let closeTime = GMSTime()
+        let openMinute = dictionary["openMinute"] as! Int? ?? 0
+        let openHour = dictionary["openHour"] as! Int? ?? 0
+        let openTime = GMSTime()
+        let openEvent = GMSEvent()
+        let closeEvent = GMSEvent()
+        let period = [GMSPeriod()]
+        let hours = GMSOpeningHours()
         let userID = dictionary["userID"] as! String? ?? ""
-        self.init(name: name, address: address, userID: userID, documentID: "")
+        //add viewport: viewport, to function call
+        self.init(name: name, address: address, coordinate: coordinate, hours: hours, userID: userID, documentID: "")
     }
     
     func saveData(completion: @escaping (Bool) -> ()) {
@@ -70,7 +179,4 @@ class Mall {
             }
         }
     }
-    
-    
-    
 }
