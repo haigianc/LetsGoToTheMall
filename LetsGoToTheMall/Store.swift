@@ -8,18 +8,25 @@
 import Foundation
 import Firebase
 import MapKit
+import GoogleMaps
+import GooglePlaces
 
 class Store: NSObject, MKAnnotation {
     var name: String
-    var website: String
+    var priceLevel: GMSPlacesPriceLevel
+    var website: URL
     var coordinate: CLLocationCoordinate2D
+    var hours: GMSOpeningHours
+    var date: Date
+    var isOpen: GMSPlaceOpenStatus
     var averageRating: Double
     var numberOfReviews: Int
     var postingUserID: String
     var documentID: String
     
     var dictionary: [String: Any] {
-        return ["name": name, "website": website, "latitude": latitude, "longitude": longitutde, "averageRating": averageRating, "numberOfReviews": numberOfReviews, "postingUserID": postingUserID]
+        var timeIntervalDate = date.timeIntervalSince1970
+        return ["name": name, "priceLevel": priceLevel, "website": website, "latitude": latitude, "longitude": longitutde, "date": timeIntervalDate, "isOpen": isOpen, "averageRating": averageRating, "numberOfReviews": numberOfReviews, "postingUserID": postingUserID]
     }
     
     var latitude: CLLocationDegrees {
@@ -34,14 +41,54 @@ class Store: NSObject, MKAnnotation {
         return CLLocation(latitude: latitude, longitude: longitutde)
     }
     
+    var closeMinute: Int {
+        return Int(closeTime.minute)
+    }
+    
+    var closeHour: Int {
+        return Int(closeTime.hour)
+    }
+    
+    var openMinute: Int{
+        return Int(openTime.minute)
+    }
+    
+    var openHour: Int{
+        return Int(openTime.hour)
+    }
+    
+    var closeTime: GMSTime{
+        return closeEvent.time
+    }
+    
+    var openTime: GMSTime{
+        return openEvent.time
+    }
+    
+    var closeEvent: GMSEvent{
+        return period[0].closeEvent ?? GMSEvent()
+    }
+    
+    var openEvent: GMSEvent{
+        return period[0].openEvent
+    }
+    
+    var period: [GMSPeriod] {
+        return hours.periods ?? [GMSPeriod()]
+    }
+    
     var title: String? {
         return name
     }
     
-    init(name: String, website: String, coordinate: CLLocationCoordinate2D, averageRating: Double, numberOfReviews: Int, postingUserID: String, documentID: String) {
+    init(name: String, priceLevel: GMSPlacesPriceLevel, website: URL, coordinate: CLLocationCoordinate2D, hours: GMSOpeningHours, date: Date, isOpen: GMSPlaceOpenStatus, averageRating: Double, numberOfReviews: Int, postingUserID: String, documentID: String) {
         self.name = name
+        self.priceLevel = priceLevel
         self.website = website
         self.coordinate = coordinate
+        self.hours = hours
+        self.date = date
+        self.isOpen = isOpen
         self.averageRating = averageRating
         self.numberOfReviews = numberOfReviews
         self.postingUserID = postingUserID
@@ -49,19 +96,26 @@ class Store: NSObject, MKAnnotation {
     }
     
     convenience override init() {
-        self.init(name: "", website: "", coordinate: CLLocationCoordinate2D(), averageRating: 0.0, numberOfReviews: 0, postingUserID: "", documentID: "")
+        self.init(name: "", priceLevel: GMSPlacesPriceLevel(rawValue: 0) ?? GMSPlacesPriceLevel.unknown, website: URL(string: "") ?? URL(string: "https://www.google.com/?client=safari")!, coordinate: CLLocationCoordinate2D(), hours: GMSOpeningHours(), date: Date(), isOpen: GMSPlaceOpenStatus(rawValue: 0) ?? GMSPlaceOpenStatus.unknown, averageRating: 0.0, numberOfReviews: 0, postingUserID: "", documentID: "")
     }
     
     convenience init(dictionary: [String: Any]) {
         let name = dictionary["name"] as! String? ?? ""
-        let website = dictionary["website"] as! String? ?? ""
+        let priceLevel = GMSPlacesPriceLevel(rawValue: 0) ?? GMSPlacesPriceLevel.unknown
+        let website = dictionary["website"] as! URL? ?? URL(string: "")!
         let latitude = dictionary["latitude"] as! Double? ?? 0.0
         let longitude = dictionary["longitude"] as! Double? ?? 0.0
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let weekdayText = dictionary["weekdayText"] as! String? ?? ""
+        // ******* how to create a GMSOpeningHours object with period OR weekdayText as parameter
+        let hours = GMSOpeningHours()
+        let timeIntervalDate = dictionary["date"] as! TimeInterval? ?? TimeInterval()
+        let date = Date(timeIntervalSince1970: timeIntervalDate)
+        let isOpen = GMSPlaceOpenStatus(rawValue: 0) ?? GMSPlaceOpenStatus.unknown
         let averageRating = dictionary["averageRating"] as! Double? ?? 0.0
         let numberOfReviews = dictionary["numberOfReviews"] as! Int? ?? 0
         let postingUserID = dictionary["postingUserID"] as! String? ?? ""
-        self.init(name: name, website: website, coordinate: coordinate, averageRating: averageRating, numberOfReviews: numberOfReviews, postingUserID: postingUserID, documentID: "")
+        self.init(name: name, priceLevel: priceLevel, website: website, coordinate: coordinate, hours: hours, date: date, isOpen: isOpen, averageRating: averageRating, numberOfReviews: numberOfReviews, postingUserID: postingUserID, documentID: "")
     }
     
     func saveData(mall: Mall, completion: @escaping (Bool) -> ()){

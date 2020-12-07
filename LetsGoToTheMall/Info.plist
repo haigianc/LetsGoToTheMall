@@ -77,5 +77,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app will need the device location in order to determine the distance from a spot to the device, and to plot the users location on a map.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app will need the device location in order to determine the distance from a spot to the device, and to plot the users location on a map.</string>
 </dict>
 </plist>

@@ -17,13 +17,18 @@ class Mall: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     //var viewport: GMSCoordinateBounds
     var hours: GMSOpeningHours
+    var date: Date
+    var isOpen: GMSPlaceOpenStatus
     var userID: String
     var documentID: String
     
     var dictionary: [String: Any] {
         //return ["name": name, "address": address, "viewport": viewport, "userID": userID]
-        return ["name": name, "address": address, "latitude": latitude, "longitude": longitutde, "userID": userID]
+        var timeIntervalDate = date.timeIntervalSince1970
+        return ["name": name, "address": address, "latitude": latitude, "longitude": longitutde, "date": timeIntervalDate, "isOpen": isOpen, "userID": userID]
     }
+    
+    //might have to add enums for isOpen
     
     var latitude: CLLocationDegrees {
         return coordinate.latitude
@@ -101,20 +106,22 @@ class Mall: NSObject, MKAnnotation {
         return name
     }
     
-    init(name: String, address: String, coordinate: CLLocationCoordinate2D, hours: GMSOpeningHours, userID: String, documentID: String) {
+    init(name: String, address: String, coordinate: CLLocationCoordinate2D, hours: GMSOpeningHours, date: Date, isOpen: GMSPlaceOpenStatus, userID: String, documentID: String) {
         //add viewport: GMSCoordinateBounds, as a parameter
         self.name = name
         self.address = address
         self.coordinate = coordinate
         //self.viewport = viewport
         self.hours = hours
+        self.date = date
+        self.isOpen = isOpen
         self.userID = userID
         self.documentID = documentID
     }
     
     convenience override init() {
         //add viewport: GMSCoordinateBounds(), to function call
-        self.init(name: "", address: "", coordinate: CLLocationCoordinate2D(), hours: GMSOpeningHours(), userID: "", documentID: "")
+        self.init(name: "", address: "", coordinate: CLLocationCoordinate2D(), hours: GMSOpeningHours(), date: Date(), isOpen: GMSPlaceOpenStatus(rawValue: 0) ?? GMSPlaceOpenStatus.unknown, userID: "", documentID: "")
     }
     
     convenience init(dictionary: [String: Any]) {
@@ -130,19 +137,30 @@ class Mall: NSObject, MKAnnotation {
 //        let northEast = CLLocationCoordinate2D(latitude: neLatitude, longitude: neLongitude)
 //        let southWest = CLLocationCoordinate2D(latitude: swLatitude, longitude: swLongitude)
 //        let viewport = GMSCoordinateBounds(coordinate: northEast, coordinate: southWest)
-        let closeMinute = dictionary["closeMinute"] as! Int? ?? 0
-        let closeHour = dictionary["closeHour"] as! Int? ?? 0
-        let closeTime = GMSTime()
-        let openMinute = dictionary["openMinute"] as! Int? ?? 0
-        let openHour = dictionary["openHour"] as! Int? ?? 0
-        let openTime = GMSTime()
-        let openEvent = GMSEvent()
-        let closeEvent = GMSEvent()
-        let period = [GMSPeriod()]
+        
+//        let closeMinute = dictionary["closeMinute"] as! Int? ?? 0
+//        let closeHour = dictionary["closeHour"] as! Int? ?? 0
+//        // ******* how to create a GMSTime object with closeHour & closeMinute as parameters
+//        let closeTime = GMSTime()
+//        let openMinute = dictionary["openMinute"] as! Int? ?? 0
+//        let openHour = dictionary["openHour"] as! Int? ?? 0
+//        // ******* how to create a GMSTime object with openHour & openMinute as parameters
+//        let openTime = GMSTime()
+//        // ******* how to create a GMSEvent object with openTime as parameter
+//        let openEvent = GMSEvent()
+//        // ******* how to create a GMSEvent object with closeTime as parameter
+//        let closeEvent = GMSEvent()
+//        // ******* how to create a GMSPeriod object with openEvent and closeEvent as part of array
+//        let period = [GMSPeriod()]
+        let weekdayText = dictionary["weekdayText"] as! String? ?? ""
+        // ******* how to create a GMSOpeningHours object with period OR weekdayText as parameter
         let hours = GMSOpeningHours()
+        let timeIntervalDate = dictionary["date"] as! TimeInterval? ?? TimeInterval()
+        let date = Date(timeIntervalSince1970: timeIntervalDate)
+        let isOpen = GMSPlaceOpenStatus(rawValue: 0) ?? GMSPlaceOpenStatus.unknown
         let userID = dictionary["userID"] as! String? ?? ""
         //add viewport: viewport, to function call
-        self.init(name: name, address: address, coordinate: coordinate, hours: hours, userID: userID, documentID: "")
+        self.init(name: name, address: address, coordinate: coordinate, hours: hours, date: date, isOpen: isOpen, userID: userID, documentID: "")
     }
     
     func saveData(completion: @escaping (Bool) -> ()) {
