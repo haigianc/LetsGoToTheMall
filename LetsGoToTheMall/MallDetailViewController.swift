@@ -30,8 +30,11 @@ class MallDetailViewController: UIViewController {
     @IBOutlet weak var instructionsLabel: UILabel!
     
     var mall: Mall!
+    var malls: Malls!
     var store: Store!
     var stores: Stores!
+    var review: Review!
+    var reviews: Reviews!
     let regionDistance: CLLocationDegrees = 600.0
     var locationManager: CLLocationManager!
     var storeCellTapped = false
@@ -47,7 +50,13 @@ class MallDetailViewController: UIViewController {
         if mall == nil {
             mall = Mall()
         }
-        
+//        if malls == nil {
+//            malls = Malls()
+//        }
+        //TODO: figure out a way to re-determine isOpenStatus from a saved mall
+        malls.loadData {
+            self.updateUserInterface()
+        }
         stores.loadData(mall: mall) {
             self.tableView.reloadData()
         }
@@ -225,7 +234,7 @@ class MallDetailViewController: UIViewController {
         if segue.identifier == "ShowStoreDetail" && storeCellTapped == true {
             let destination = segue.destination as! StoreDetailViewController
             let selectedIndexPath = tableView.indexPathForSelectedRow!
-            print("🚗 place = \(stores.storeArray[selectedIndexPath.row].name)")
+            print("🚗 (tapped cell) place from storeArray = \(stores.storeArray[selectedIndexPath.row].name)")
             destination.store = stores.storeArray[selectedIndexPath.row]
             destination.store.name = stores.storeArray[selectedIndexPath.row].name
             destination.store.website = stores.storeArray[selectedIndexPath.row].website
@@ -240,16 +249,16 @@ class MallDetailViewController: UIViewController {
             destination.mall = mall
             stores.storeArray.append(store)
             destination.stores = stores
-            destination.updateUserInterface()
+            //destination.updateUserInterface()
             storeCellTapped = false
         } else if segue.identifier == "ShowStoreDetail" && storeCellTapped == false && placeSelected != nil {
-            print("🚗 place = \(placeSelected)")
+            print("🚗 (new place) place from search = \(placeSelected)")
             let destination = segue.destination as! StoreDetailViewController
             let timeIntervalDate = date.timeIntervalSince1970
             var newStore = Store(name: placeSelected.name!, priceLevel: placeSelected.priceLevel.rawValue, website: "\(placeSelected.website!)", coordinate: placeSelected.coordinate, hours: placeSelected.openingHours?.weekdayText ?? ["Unknown"], date: date, isOpen: placeSelected.isOpen().rawValue, averageRating: 0, numberOfReviews: 0, postingUserID: mall.userID, documentID: "")
             destination.store = newStore
             destination.mall = mall
-            destination.updateUserInterface()
+            //destination.updateUserInterface()
             storeCellTapped = false
         }
     }
@@ -290,9 +299,13 @@ extension MallDetailViewController: GMSAutocompleteViewControllerDelegate {
         if ((place.types?.contains("store") == true || place.types?.contains("shopping_mall") == true) && mall.viewport.contains(place.coordinate)) {
             storeCellTapped = false
             performSegue(withIdentifier: "ShowStoreDetail", sender: self)
+        } else {
+            storeCellTapped = false
+            performSegue(withIdentifier: "ShowStoreDetail", sender: self)
+            //dismiss(animated: true, completion: nil)
         }
         storeCellTapped = false
-        performSegue(withIdentifier: "ShowStoreDetail", sender: self)
+        //performSegue(withIdentifier: "ShowStoreDetail", sender: self)
         dismiss(animated: true, completion: nil)
     }
     

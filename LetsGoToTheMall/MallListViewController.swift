@@ -22,6 +22,8 @@ class MallListViewController: UIViewController {
     var malls: Malls!
     var store: Store!
     var stores: Stores!
+    var review: Review!
+    var reviews: Reviews!
     var locationManager: CLLocationManager!
     var currentLocation: CLLocation!
     var cellTapped = false
@@ -35,6 +37,8 @@ class MallListViewController: UIViewController {
         malls = Malls()
         store = Store()
         stores = Stores()
+        review = Review()
+        reviews = Reviews()
         tableView.delegate = self
         tableView.dataSource = self
         configureSegmentedControl()
@@ -78,7 +82,10 @@ class MallListViewController: UIViewController {
             destination.mall.isOpen = malls.mallArray[selectedIndexPath.row].isOpen
             destination.updateUserInterface()
             destination.store = store
-            destination.stores = stores 
+            destination.stores = stores
+            destination.malls = malls
+            destination.review = review
+            destination.reviews = reviews
             cellTapped = false
         } else if segue.identifier == "ShowMallDetail" && cellTapped == false && placeSelected != nil {
             let destination = segue.destination as! MallDetailViewController
@@ -87,6 +94,9 @@ class MallListViewController: UIViewController {
             destination.mall = newMall
             destination.stores = Stores()
             destination.store = Store()
+            destination.review = Review()
+            destination.reviews = Reviews()
+            //destination.malls = Malls()
             destination.updateUserInterface()
             cellTapped = false
         }

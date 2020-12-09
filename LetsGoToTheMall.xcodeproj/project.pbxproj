@@ -23,6 +23,8 @@
 		CD6251B7257B41280035696D /* Stores.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6251B6257B41280035696D /* Stores.swift */; };
 		CD6251B9257B41300035696D /* Reviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6251B8257B41300035696D /* Reviews.swift */; };
 		CD672BCB257C0476002D9D85 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD672BCA257C0476002D9D85 /* APIKeys.swift */; };
+		CD874CD325808DB200F2710A /* ReviewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD874CD225808DB200F2710A /* ReviewTableViewController.swift */; };
+		CD874D33258093A700F2710A /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD874D32258093A700F2710A /* ReviewTableViewCell.swift */; };
 		CD9FFFA2257AACA7000F80DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CD9FFFA1257AACA7000F80DC /* GoogleService-Info.plist */; };
 		CD9FFFA7257AB4CC000F80DC /* MallListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9FFFA6257AB4CC000F80DC /* MallListViewController.swift */; };
 		CD9FFFAA257AB5F1000F80DC /* MallTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9FFFA9257AB5F1000F80DC /* MallTableViewCell.swift */; };
@@ -51,6 +53,8 @@
 		CD6251B6257B41280035696D /* Stores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stores.swift; sourceTree = "<group>"; };
 		CD6251B8257B41300035696D /* Reviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reviews.swift; sourceTree = "<group>"; };
 		CD672BCA257C0476002D9D85 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
+		CD874CD225808DB200F2710A /* ReviewTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTableViewController.swift; sourceTree = "<group>"; };
+		CD874D32258093A700F2710A /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
 		CD9FFFA1257AACA7000F80DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		CD9FFFA6257AB4CC000F80DC /* MallListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MallListViewController.swift; sourceTree = "<group>"; };
 		CD9FFFA9257AB5F1000F80DC /* MallTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MallTableViewCell.swift; sourceTree = "<group>"; };
@@ -122,6 +126,8 @@
 				CD9FFFAC257ABD35000F80DC /* MallDetailViewController.swift */,
 				CDEEA692258009D400560E4D /* StoreInMallTableViewCell.swift */,
 				CD3634D9257ACC9B0038C267 /* StoreDetailViewController.swift */,
+				CD874D32258093A700F2710A /* ReviewTableViewCell.swift */,
+				CD874CD225808DB200F2710A /* ReviewTableViewController.swift */,
 				CD6251AF257AFE790035696D /* UIViewController+alert.swift */,
 				CD672BCA257C0476002D9D85 /* APIKeys.swift */,
 				CD2A24FB257AAA7100A1D5C5 /* Main.storyboard */,
@@ -273,6 +279,7 @@
 				CD3634E1257AE3FB0038C267 /* Store.swift in Sources */,
 				CD3634DE257AE3B90038C267 /* Mall.swift in Sources */,
 				CDEEA693258009D400560E4D /* StoreInMallTableViewCell.swift in Sources */,
+				CD874D33258093A700F2710A /* ReviewTableViewCell.swift in Sources */,
 				CD672BCB257C0476002D9D85 /* APIKeys.swift in Sources */,
 				CD6251AD257AEC790035696D /* Review.swift in Sources */,
 				CD9FFFAD257ABD35000F80DC /* MallDetailViewController.swift in Sources */,
@@ -280,6 +287,7 @@
 				CD2A24F8257AAA7100A1D5C5 /* SceneDelegate.swift in Sources */,
 				CD3634DA257ACC9B0038C267 /* StoreDetailViewController.swift in Sources */,
 				CD9FFFAA257AB5F1000F80DC /* MallTableViewCell.swift in Sources */,
+				CD874CD325808DB200F2710A /* ReviewTableViewController.swift in Sources */,
 				CD6251B4257B411F0035696D /* Malls.swift in Sources */,
 				CD6251B9257B41300035696D /* Reviews.swift in Sources */,
 			);

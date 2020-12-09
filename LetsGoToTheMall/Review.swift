@@ -19,7 +19,9 @@ class Review {
     
     var dictionary: [String: Any] {
         let timeIntervalDate = date.timeIntervalSince1970
-        return ["title": title, "text": text, "rating": rating, "reviewUserID": reviewUserID, "reviewUserEmail": reviewUserEmail, "date": timeIntervalDate]    }
+        return ["title": title, "text": text, "rating": rating, "reviewUserID": reviewUserID, "reviewUserEmail": reviewUserEmail, "date": timeIntervalDate]
+        
+    }
     
     init(title: String, text: String, rating: Int, reviewUserID: String, reviewUserEmail: String, date: Date, documentID: String) {
         self.title = title
@@ -29,6 +31,10 @@ class Review {
         self.reviewUserEmail = reviewUserEmail
         self.date = date
         self.documentID = documentID
+    }
+    
+    convenience init() {
+        self.init(title: "", text: "", rating: 0, reviewUserID: "", reviewUserEmail: "", date: Date(), documentID: "")
     }
     
     convenience init(dictionary: [String: Any]) {
