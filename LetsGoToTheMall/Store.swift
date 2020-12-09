@@ -13,12 +13,13 @@ import GooglePlaces
 
 class Store: NSObject, MKAnnotation {
     var name: String
-    var priceLevel: GMSPlacesPriceLevel
-    var website: URL
+    //var priceLevel: GMSPlacesPriceLevel
+    var priceLevel: Int
+    var website: String
     var coordinate: CLLocationCoordinate2D
-    var hours: GMSOpeningHours
+    var hours: [String]
     var date: Date
-    var isOpen: GMSPlaceOpenStatus
+    var isOpen: Int
     var averageRating: Double
     var numberOfReviews: Int
     var postingUserID: String
@@ -26,7 +27,7 @@ class Store: NSObject, MKAnnotation {
     
     var dictionary: [String: Any] {
         var timeIntervalDate = date.timeIntervalSince1970
-        return ["name": name, "priceLevel": priceLevel, "website": website, "latitude": latitude, "longitude": longitutde, "date": timeIntervalDate, "isOpen": isOpen, "averageRating": averageRating, "numberOfReviews": numberOfReviews, "postingUserID": postingUserID]
+        return ["name": name, "priceLevel": priceLevel, "website": website, "latitude": latitude, "longitude": longitutde, "hours": hours, "date": timeIntervalDate, "isOpen": isOpen, "averageRating": averageRating, "numberOfReviews": numberOfReviews, "postingUserID": postingUserID]
     }
     
     var latitude: CLLocationDegrees {
@@ -41,47 +42,11 @@ class Store: NSObject, MKAnnotation {
         return CLLocation(latitude: latitude, longitude: longitutde)
     }
     
-    var closeMinute: Int {
-        return Int(closeTime.minute)
-    }
-    
-    var closeHour: Int {
-        return Int(closeTime.hour)
-    }
-    
-    var openMinute: Int{
-        return Int(openTime.minute)
-    }
-    
-    var openHour: Int{
-        return Int(openTime.hour)
-    }
-    
-    var closeTime: GMSTime{
-        return closeEvent.time
-    }
-    
-    var openTime: GMSTime{
-        return openEvent.time
-    }
-    
-    var closeEvent: GMSEvent{
-        return period[0].closeEvent ?? GMSEvent()
-    }
-    
-    var openEvent: GMSEvent{
-        return period[0].openEvent
-    }
-    
-    var period: [GMSPeriod] {
-        return hours.periods ?? [GMSPeriod()]
-    }
-    
     var title: String? {
         return name
     }
     
-    init(name: String, priceLevel: GMSPlacesPriceLevel, website: URL, coordinate: CLLocationCoordinate2D, hours: GMSOpeningHours, date: Date, isOpen: GMSPlaceOpenStatus, averageRating: Double, numberOfReviews: Int, postingUserID: String, documentID: String) {
+    init(name: String, priceLevel: Int, website: String, coordinate: CLLocationCoordinate2D, hours: [String], date: Date, isOpen: Int, averageRating: Double, numberOfReviews: Int, postingUserID: String, documentID: String) {
         self.name = name
         self.priceLevel = priceLevel
         self.website = website
@@ -96,22 +61,22 @@ class Store: NSObject, MKAnnotation {
     }
     
     convenience override init() {
-        self.init(name: "", priceLevel: GMSPlacesPriceLevel(rawValue: 0) ?? GMSPlacesPriceLevel.unknown, website: URL(string: "") ?? URL(string: "https://www.google.com/?client=safari")!, coordinate: CLLocationCoordinate2D(), hours: GMSOpeningHours(), date: Date(), isOpen: GMSPlaceOpenStatus(rawValue: 0) ?? GMSPlaceOpenStatus.unknown, averageRating: 0.0, numberOfReviews: 0, postingUserID: "", documentID: "")
+        self.init(name: "", priceLevel: 0, website: "", coordinate: CLLocationCoordinate2D(), hours: [], date: Date(), isOpen: 0, averageRating: 0.0, numberOfReviews: 0, postingUserID: "", documentID: "")
     }
     
     convenience init(dictionary: [String: Any]) {
         let name = dictionary["name"] as! String? ?? ""
-        let priceLevel = GMSPlacesPriceLevel(rawValue: 0) ?? GMSPlacesPriceLevel.unknown
-        let website = dictionary["website"] as! URL? ?? URL(string: "")!
+        let priceLevel = dictionary["priceLevel"] as! Int? ?? 0
+        let website = dictionary["website"] as! String? ?? ""
         let latitude = dictionary["latitude"] as! Double? ?? 0.0
         let longitude = dictionary["longitude"] as! Double? ?? 0.0
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let weekdayText = dictionary["weekdayText"] as! String? ?? ""
         // ******* how to create a GMSOpeningHours object with period OR weekdayText as parameter
-        let hours = GMSOpeningHours()
+        let hours = dictionary["hours"] as! [String]? ?? [""]
         let timeIntervalDate = dictionary["date"] as! TimeInterval? ?? TimeInterval()
         let date = Date(timeIntervalSince1970: timeIntervalDate)
-        let isOpen = GMSPlaceOpenStatus(rawValue: 0) ?? GMSPlaceOpenStatus.unknown
+        let isOpen = dictionary["isOpen"] as! Int? ?? 0
         let averageRating = dictionary["averageRating"] as! Double? ?? 0.0
         let numberOfReviews = dictionary["numberOfReviews"] as! Int? ?? 0
         let postingUserID = dictionary["postingUserID"] as! String? ?? ""
@@ -149,33 +114,33 @@ class Store: NSObject, MKAnnotation {
     }
     
     func updateAverageRating(completed: @escaping() -> ()) {
-        let db = Firestore.firestore()
-        let reviewsRef = db.collection("spots").document(documentID).collection("reviews")
-        // get all reviews
-        reviewsRef.getDocuments { (querySnapshot, error) in
-            guard error == nil else{
-                print("😡 ERROR: failed to get query snapshot of reviews for reviewsRef \(reviewsRef)")
-                return completed()
-            }
-            var ratingTotal = 0.0 //this will hold the total of all review ratings
-            for document in querySnapshot!.documents{ // loop through all reviews
-                let reviewDictionary = document.data()
-                let rating = reviewDictionary["rating"] as! Int? ?? 0 //read in rating for each review
-                ratingTotal = ratingTotal + Double(rating)
-            }
-            self.averageRating = ratingTotal / Double(querySnapshot!.count)
-            self.numberOfReviews = querySnapshot!.count
-            let dataToSave = self.dictionary //create a dictionary with the latest values
-            let spotRef = db.collection("spots").document(self.documentID)
-            spotRef.setData(dataToSave) { (error) in
-                if let error = error {
-                    print("😡 ERROR: updating document \(self.documentID) in spot after changing averageReview & numberOfReviews info \(error.localizedDescription)")
-                    completed()
-                } else {
-                    print("🔢 New Average: \(self.averageRating). Document updated with ref ID \(self.documentID)")
-                    completed()
-                }
-            }
-        }
+//        let db = Firestore.firestore()
+//        let reviewsRef = db.collection("spots").document(documentID).collection("reviews")
+//        // get all reviews
+//        reviewsRef.getDocuments { (querySnapshot, error) in
+//            guard error == nil else{
+//                print("😡 ERROR: failed to get query snapshot of reviews for reviewsRef \(reviewsRef)")
+//                return completed()
+//            }
+//            var ratingTotal = 0.0 //this will hold the total of all review ratings
+//            for document in querySnapshot!.documents{ // loop through all reviews
+//                let reviewDictionary = document.data()
+//                let rating = reviewDictionary["rating"] as! Int? ?? 0 //read in rating for each review
+//                ratingTotal = ratingTotal + Double(rating)
+//            }
+//            self.averageRating = ratingTotal / Double(querySnapshot!.count)
+//            self.numberOfReviews = querySnapshot!.count
+//            let dataToSave = self.dictionary //create a dictionary with the latest values
+//            let spotRef = db.collection("spots").document(self.documentID)
+//            spotRef.setData(dataToSave) { (error) in
+//                if let error = error {
+//                    print("😡 ERROR: updating document \(self.documentID) in spot after changing averageReview & numberOfReviews info \(error.localizedDescription)")
+//                    completed()
+//                } else {
+//                    print("🔢 New Average: \(self.averageRating). Document updated with ref ID \(self.documentID)")
+//                    completed()
+//                }
+//            }
+//        }
     }
 }

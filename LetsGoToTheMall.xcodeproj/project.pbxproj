@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		63AFEB53712590FD899B478F /* Pods_LetsGoToTheMall.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30579B97698118B30E41AFAC /* Pods_LetsGoToTheMall.framework */; };
-		CD0E0AA8257DDF4C00C431E7 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0E0AA7257DDF4A00C431E7 /* CustomAnnotation.swift */; };
 		CD2A24F6257AAA7100A1D5C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD2A24F5257AAA7100A1D5C5 /* AppDelegate.swift */; };
 		CD2A24F8257AAA7100A1D5C5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD2A24F7257AAA7100A1D5C5 /* SceneDelegate.swift */; };
 		CD2A24FA257AAA7100A1D5C5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD2A24F9257AAA7100A1D5C5 /* LoginViewController.swift */; };
@@ -28,13 +27,13 @@
 		CD9FFFA7257AB4CC000F80DC /* MallListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9FFFA6257AB4CC000F80DC /* MallListViewController.swift */; };
 		CD9FFFAA257AB5F1000F80DC /* MallTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9FFFA9257AB5F1000F80DC /* MallTableViewCell.swift */; };
 		CD9FFFAD257ABD35000F80DC /* MallDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9FFFAC257ABD35000F80DC /* MallDetailViewController.swift */; };
+		CDEEA693258009D400560E4D /* StoreInMallTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDEEA692258009D400560E4D /* StoreInMallTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2A452B51E1A55DBDAF4F3478 /* Pods-LetsGoToTheMall.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LetsGoToTheMall.release.xcconfig"; path = "Target Support Files/Pods-LetsGoToTheMall/Pods-LetsGoToTheMall.release.xcconfig"; sourceTree = "<group>"; };
 		30579B97698118B30E41AFAC /* Pods_LetsGoToTheMall.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LetsGoToTheMall.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA8FB0B3B1B77151B754B84E /* Pods-LetsGoToTheMall.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LetsGoToTheMall.debug.xcconfig"; path = "Target Support Files/Pods-LetsGoToTheMall/Pods-LetsGoToTheMall.debug.xcconfig"; sourceTree = "<group>"; };
-		CD0E0AA7257DDF4A00C431E7 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		CD2A24F2257AAA7100A1D5C5 /* LetsGoToTheMall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LetsGoToTheMall.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD2A24F5257AAA7100A1D5C5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD2A24F7257AAA7100A1D5C5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -56,6 +55,7 @@
 		CD9FFFA6257AB4CC000F80DC /* MallListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MallListViewController.swift; sourceTree = "<group>"; };
 		CD9FFFA9257AB5F1000F80DC /* MallTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MallTableViewCell.swift; sourceTree = "<group>"; };
 		CD9FFFAC257ABD35000F80DC /* MallDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MallDetailViewController.swift; sourceTree = "<group>"; };
+		CDEEA692258009D400560E4D /* StoreInMallTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInMallTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,7 +110,6 @@
 			children = (
 				CD2A24F5257AAA7100A1D5C5 /* AppDelegate.swift */,
 				CD2A24F7257AAA7100A1D5C5 /* SceneDelegate.swift */,
-				CD0E0AA7257DDF4A00C431E7 /* CustomAnnotation.swift */,
 				CD3634DD257AE3B90038C267 /* Mall.swift */,
 				CD6251B3257B411F0035696D /* Malls.swift */,
 				CD3634E0257AE3FB0038C267 /* Store.swift */,
@@ -121,6 +120,7 @@
 				CD9FFFA6257AB4CC000F80DC /* MallListViewController.swift */,
 				CD9FFFA9257AB5F1000F80DC /* MallTableViewCell.swift */,
 				CD9FFFAC257ABD35000F80DC /* MallDetailViewController.swift */,
+				CDEEA692258009D400560E4D /* StoreInMallTableViewCell.swift */,
 				CD3634D9257ACC9B0038C267 /* StoreDetailViewController.swift */,
 				CD6251AF257AFE790035696D /* UIViewController+alert.swift */,
 				CD672BCA257C0476002D9D85 /* APIKeys.swift */,
@@ -272,8 +272,8 @@
 				CD2A24F6257AAA7100A1D5C5 /* AppDelegate.swift in Sources */,
 				CD3634E1257AE3FB0038C267 /* Store.swift in Sources */,
 				CD3634DE257AE3B90038C267 /* Mall.swift in Sources */,
+				CDEEA693258009D400560E4D /* StoreInMallTableViewCell.swift in Sources */,
 				CD672BCB257C0476002D9D85 /* APIKeys.swift in Sources */,
-				CD0E0AA8257DDF4C00C431E7 /* CustomAnnotation.swift in Sources */,
 				CD6251AD257AEC790035696D /* Review.swift in Sources */,
 				CD9FFFAD257ABD35000F80DC /* MallDetailViewController.swift in Sources */,
 				CD6251B0257AFE7A0035696D /* UIViewController+alert.swift in Sources */,
