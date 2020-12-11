@@ -36,28 +36,4 @@ class Stores {
             completed()
         }
     }
-    
-    func getData(placeID: String, completed: @escaping ()->()){
-//        let urlString = "https://maps.googleapis.com/maps/api/place/details/json?\(APIKeys.googlePlacesKey)&\(placeID)"
-//        guard let url = URL(string: urlString) else{
-//            print("😡 ERROR: Could not create a URL from \(urlString)")
-//            return
-//        }
-//        //Create Session
-//        let session = URLSession.shared
-//        //Get data with .dataTask method
-//        let task = session.dataTask(with: url) { (data, response, error) in
-//            if let error = error{
-//                print("😡 ERROR: \(error.localizedDescription)")
-//            }
-//            //deal with the data
-//            do {
-//                let results = try JSONDecoder().decode([MallData].self, from: data!)
-//            } catch {
-//                print("😡 JSON ERROR: \(error.localizedDescription)")
-//            }
-//            completed()
-//        }
-//        task.resume()
-    }
 }

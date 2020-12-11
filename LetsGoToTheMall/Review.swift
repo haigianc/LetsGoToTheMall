@@ -34,7 +34,9 @@ class Review {
     }
     
     convenience init() {
-        self.init(title: "", text: "", rating: 0, reviewUserID: "", reviewUserEmail: "", date: Date(), documentID: "")
+        let reviewUserID = Auth.auth().currentUser?.uid ?? ""
+        let reviewUserEmail = Auth.auth().currentUser?.email ?? "unknown email"
+        self.init(title: "", text: "", rating: 0, reviewUserID: reviewUserID, reviewUserEmail: reviewUserEmail, date: Date(), documentID: "")
     }
     
     convenience init(dictionary: [String: Any]) {
@@ -56,6 +58,7 @@ class Review {
         //create dictionary representing data we want to save
         let dataToSave: [String: Any] = self.dictionary
         //if we have saved a record well have an id, otherwise .addDocument will create one
+        print("📝 docID of review: \(self.documentID)")
         if self.documentID == "" { //create a new doc via .addDocument
             var ref: DocumentReference? = nil //firestore will create a new ID for us
             ref = db.collection("malls").document(mall.documentID).collection("stores").document(store.documentID).collection("reviews").addDocument(data: dataToSave){ (error) in
@@ -65,20 +68,35 @@ class Review {
                 }
                 self.documentID = ref!.documentID
                 print("💨 Added document: \(self.documentID) to mall: \(mall.documentID)") //it worked!
-                store.updateAverageRating {
+                store.updateAverageRating(mall: mall) {
                     completion(true)
                 }
             }
         } else { //else save to the existing document id
-            let ref = db.collection("malls").document(mall.documentID).collection("stores").document(store.documentID).collection("reviews").addDocument(data: dataToSave) { (error) in
+            let ref = db.collection("malls").document(mall.documentID).collection("stores").document(store.documentID).collection("reviews").document(self.documentID)
+            ref.setData(dataToSave) { (error) in
                 guard error == nil else{
                     print("😡 ERROR: updating document \(error!.localizedDescription)")
                     return completion(false)
                 }
                 print("💨 Updated document: \(self.documentID) in mall: \(mall.documentID)") //it worked!
-                store.updateAverageRating {
+                store.updateAverageRating(mall: mall) {
                     completion(true)
                 }
+            }
+        }
+    }
+    
+    func deleteData(mall: Mall, store: Store, review: Review, completion: @escaping (Bool) -> ()) {
+        let db = Firestore.firestore()
+        db.collection("malls").document(mall.documentID).collection("stores").document(store.documentID).collection("reviews").document(review.documentID).delete { (error) in
+            if let error = error {
+                print("😡 ERROR: deleting review documentID \(self.documentID). Error: \(error.localizedDescription)")
+                completion(false)
+            }
+            else {
+                print("👍 Successfully deleted document \(self.documentID)")
+                completion(true)
             }
         }
     }

@@ -10,6 +10,7 @@ import GooglePlaces
 import MapKit
 import GoogleMaps
 import Contacts
+import Firebase
 
 private let dateFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
@@ -19,8 +20,8 @@ private let dateFormatter: DateFormatter = {
 }()
 
 class MallDetailViewController: UIViewController {
-    @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var addressTextField: UITextField!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var operatingHoursTextView: UITextView!
     @IBOutlet weak var isOpenLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
@@ -50,9 +51,9 @@ class MallDetailViewController: UIViewController {
         if mall == nil {
             mall = Mall()
         }
-//        if malls == nil {
-//            malls = Malls()
-//        }
+        if malls == nil {
+            malls = Malls()
+        }
         //TODO: figure out a way to re-determine isOpenStatus from a saved mall
         malls.loadData {
             self.updateUserInterface()
@@ -60,17 +61,13 @@ class MallDetailViewController: UIViewController {
         stores.loadData(mall: mall) {
             self.tableView.reloadData()
         }
-        if stores.storeArray.count == 0 {
-            instructionsLabel.text = "Click \'Add a Store\' to add a store to your list!"
-        } else {
-            instructionsLabel.text = "Scroll and click on a store to view its details!"
-        }
-        
+
         operatingHoursTextView.text = ""
         mapView.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
         setupMapView()
+        tableView.tableFooterView = UIView()
         //updateUserInterface()
     }
     
@@ -90,8 +87,8 @@ class MallDetailViewController: UIViewController {
     func updateUserInterface() { // update when we arrive with new data
         print("\(mall.name)")
         DispatchQueue.main.async {
-            self.nameTextField.text = self.mall.name
-            self.addressTextField.text = self.mall.address
+            self.nameLabel.text = self.mall.name
+            self.addressLabel.text = self.mall.address
             guard self.mall.hours != nil else {
                 self.operatingHoursTextView.text = "Hours unknown"
                 return
@@ -100,8 +97,20 @@ class MallDetailViewController: UIViewController {
                 self.operatingHoursTextView.text = self.operatingHoursTextView.text + "\(self.mall.hours[x])\n"
             }
         }
+        updateNavigationItems()
         configureIsOpenLabel()
         updateMap()
+    }
+    
+    func updateNavigationItems(){
+        if mall.userID == "" { //this is a new user
+            self.navigationItem.leftItemsSupplementBackButton = false
+        } else if mall.userID == Auth.auth().currentUser?.uid { //same user, save available
+            self.navigationItem.leftItemsSupplementBackButton = false
+        } else {
+            saveBarButtonItem.hide()
+            cancelBarButtonItem.hide()
+        }
     }
     
     func configureIsOpenLabel() {
@@ -127,48 +136,9 @@ class MallDetailViewController: UIViewController {
         }
     }
     
-    func getStores(){
-//        let request = MKLocalSearchRequest()
-//        request.naturalLanguageQuery = "stores"
-//        request.region = mapView.region
-//
-//        let search = MKLocalSearch(request: request)
-//            search.start(completionHandler: {(response, error) in
-//                if error != nil {
-//                    print("Error occured in search: \(error!.localizedDescription)")
-//                } else if response!.mapItems.count == 0 {
-//                    print("No matches found")
-//                } else {
-//                    print("Matches found")
-//
-//                    for item in response!.mapItems {
-//                        print("Name = \(item.name)")
-//                        print("Phone = \(item.phoneNumber)")
-//                }
-//            }
-//        })
-    }
-    
     func updateFromInterface() {// update before saving data
-        mall.name = nameTextField.text!
-        mall.address = addressTextField.text!
-        
-        //        var hours = operatingHoursTextView.text
-        //        var dailyHours: [String] = []
-        //        var dailyString = ""
-        //        guard hours != nil else {
-        //            return
-        //        }
-        //        while hours!.contains("\n") {
-        //            var indexOf = hours!.firstIndex(of: "\n")
-        //            dailyString = hours!.substring(to: indexOf!)
-        //            dailyHours.append(dailyString)
-        //            var nextIndex = hours!.index(after: indexOf!)
-        //            hours = hours!.substring(from: nextIndex)
-        //        }
-        //        //mall.hours.weekdayText = dailyHours
-        //        mall.hours = GMSOpeningHours()
-        //        print("***** updated FROM hours = \(mall.hours)")
+        mall.name = nameLabel.text!
+        mall.address = addressLabel.text!
     }
     
     func leaveViewController(){
@@ -296,17 +266,15 @@ extension MallDetailViewController: GMSAutocompleteViewControllerDelegate {
         print("🦄 in selected mall : \(mall.viewport.contains(place.coordinate))")
         print("viewport: NE: \(mall.viewport.northEast) SW: \(mall.viewport.southWest)")
         print("store coordinates: \(place.coordinate)")
-        if ((place.types?.contains("store") == true || place.types?.contains("shopping_mall") == true) && mall.viewport.contains(place.coordinate)) {
-            storeCellTapped = false
-            performSegue(withIdentifier: "ShowStoreDetail", sender: self)
+        if !((place.types?.contains("store") == true || place.types?.contains("shopping_mall") == true) && mall.viewport.contains(place.coordinate)) {
+            dismiss(animated: true, completion: nil)
+            self.oneButtonAlert(title: "Could not add \(place.name!)", message: "You cannot add a store to a mall that does not contain the store")
         } else {
             storeCellTapped = false
             performSegue(withIdentifier: "ShowStoreDetail", sender: self)
-            //dismiss(animated: true, completion: nil)
+            dismiss(animated: true, completion: nil)
         }
         storeCellTapped = false
-        //performSegue(withIdentifier: "ShowStoreDetail", sender: self)
-        dismiss(animated: true, completion: nil)
     }
     
     func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {

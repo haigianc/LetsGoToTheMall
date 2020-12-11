@@ -7,10 +7,12 @@
 
 import UIKit
 import FirebaseUI
+import AVFoundation
 
 class LoginViewController: UIViewController {
     
     var authUI: FUIAuth!
+    var audioPlayer: AVAudioPlayer!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +24,21 @@ class LoginViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         signIn()
+    }
+    
+    func playSound(name: String){
+        if let sound = NSDataAsset(name: name){
+            do {
+                try audioPlayer = AVAudioPlayer(data: sound.data)
+                audioPlayer.play()
+            } catch {
+                print("😡 ERROR: \(error.localizedDescription) Could not initialize AVAudioPlayer object.")
+            }
+        } else {
+            print("😡 ERROR: could not read data from file \(name)")
+        }
     }
 
     func signIn() {
@@ -76,6 +92,7 @@ extension LoginViewController: FUIAuthDelegate {
     }
     
     func authPickerViewController(forAuthUI authUI: FUIAuth) -> FUIAuthPickerViewController {
+        playSound(name: "audio")
         let marginInsets: CGFloat = 16.0 // amount to indent UIImageView on each side
         let topSafeArea = self.view.safeAreaInsets.top
 
@@ -83,9 +100,11 @@ extension LoginViewController: FUIAuthDelegate {
         let loginViewController = FUIAuthPickerViewController(authUI: authUI)
 
         // Set background color to white
-        loginViewController.view.backgroundColor = UIColor.white
+        loginViewController.view.backgroundColor = UIColor(named: "PrimaryColor")
         loginViewController.view.subviews[0].backgroundColor = UIColor.clear
         loginViewController.view.subviews[0].subviews[0].backgroundColor = UIColor.clear
+        //loginViewController.tabBarController?.view.backgroundColor = UIColor(named: "PrimaryColor")
+        loginViewController.navigationItem.titleView?.backgroundColor = UIColor(named: "PrimaryColor")
 
         // Create a frame for a UIImageView to hold our logo
         let x = marginInsets
@@ -100,6 +119,7 @@ extension LoginViewController: FUIAuthDelegate {
         logoImageView.image = UIImage(named: "logo")
         logoImageView.contentMode = .scaleAspectFit // Set imageView to Aspect Fit
         loginViewController.view.addSubview(logoImageView) // Add ImageView to the login controller's main view
+        
         return loginViewController
     }
 }

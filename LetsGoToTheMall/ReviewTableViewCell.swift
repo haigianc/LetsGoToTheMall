@@ -20,7 +20,7 @@ class ReviewTableViewCell: UITableViewCell {
             for starImage in starImageCollection {
                 let imageName = (starImage.tag < review.rating ? "star.fill" : "star")
                 starImage.image = UIImage(systemName: imageName)
-                starImage.tintColor = (starImage.tag < review.rating ? UIColor(named: "PrimaryColor") : .darkText)
+                starImage.tintColor = (starImage.tag < review.rating ? UIColor(named: "PrimaryColor") : UIColor(named: "PrimaryColor"))
             }
         }
     }

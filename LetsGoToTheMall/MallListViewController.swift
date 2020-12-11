@@ -10,6 +10,7 @@ import CoreLocation
 import GooglePlaces
 import GoogleMaps
 import Contacts
+import Firebase
 
 class MallListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
@@ -17,6 +18,8 @@ class MallListViewController: UIViewController {
     @IBOutlet weak var editBarButton: UIBarButtonItem!
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     @IBOutlet weak var signOutBarButton: UIBarButtonItem!
+
+    let userID = Auth.auth().currentUser?.uid ?? ""
     
     var mall: Mall!
     var malls: Malls!
@@ -42,6 +45,7 @@ class MallListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         configureSegmentedControl()
+        tableView.tableFooterView = UIView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,7 +84,7 @@ class MallListViewController: UIViewController {
             destination.mall.viewport = malls.mallArray[selectedIndexPath.row].viewport
             destination.mall.hours = malls.mallArray[selectedIndexPath.row].hours
             destination.mall.isOpen = malls.mallArray[selectedIndexPath.row].isOpen
-            destination.updateUserInterface()
+            //destination.updateUserInterface()
             destination.store = store
             destination.stores = stores
             destination.malls = malls
@@ -97,7 +101,7 @@ class MallListViewController: UIViewController {
             destination.review = Review()
             destination.reviews = Reviews()
             //destination.malls = Malls()
-            destination.updateUserInterface()
+            //destination.updateUserInterface()
             cellTapped = false
         }
     }
@@ -172,15 +176,31 @@ extension MallListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
+        if editingStyle == .delete && userID == malls.mallArray[indexPath.row].userID {
             mall = malls.mallArray[indexPath.row]
             malls.mallArray.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             mall.deleteData(mall: mall) { (success) in
+                for singleStore in self.stores.storeArray {
+                    for singleReview in self.reviews.reviewArray {
+                        self.review.deleteData(mall: self.mall, store: singleStore, review: singleReview) { (success) in
+                            self.store.deleteData(mall: self.mall, store: singleStore) { (success) in
+                                if !success {
+                                    self.oneButtonAlert(title: "Could not delete data", message: "There was an error deleting your data")
+                                }
+                            }
+                        }
+                        if !success {
+                            self.oneButtonAlert(title: "Could not delete data", message: "There was an error deleting your data")
+                        }
+                    }
+                }
                 if !success {
-                    self.oneButtonAlert(title: "Could not save data", message: "There was an error saving your data")
+                    self.oneButtonAlert(title: "Could not delete data", message: "There was an error deleting your data")
                 }
             }
+        } else if userID != malls.mallArray[indexPath.row].userID {
+            self.oneButtonAlert(title: "Could not delete data", message: "You cannot delete a mall you didn't post.")
         }
     }
     
@@ -190,9 +210,14 @@ extension MallListViewController: GMSAutocompleteViewControllerDelegate {
     
     // Handle the user's selection.
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        placeSelected = place
-        performSegue(withIdentifier: "ShowMallDetail", sender: self)
-        dismiss(animated: true, completion: nil)
+        if !(place.types?.contains("shopping_mall") == true) {
+            dismiss(animated: true, completion: nil)
+            self.oneButtonAlert(title: "Could not add \(place.name!)", message: "You cannot add \(place.name!) because it is not a mall")
+        } else {
+            placeSelected = place
+            performSegue(withIdentifier: "ShowMallDetail", sender: self)
+            dismiss(animated: true, completion: nil)
+        }
     }
     
     func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {

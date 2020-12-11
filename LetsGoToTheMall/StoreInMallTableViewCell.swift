@@ -12,6 +12,7 @@ class StoreInMallTableViewCell: UITableViewCell {
     @IBOutlet weak var storeNameLabel: UILabel!
     @IBOutlet weak var storeStatusLabel: UILabel!
     
+    
 
     var store: Store! {
         didSet{
